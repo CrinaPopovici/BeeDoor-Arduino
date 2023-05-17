@@ -1,34 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import MainContainer from "./navigation/MainContainer";
-
-// function App(){
-//     return(
-//         <MainContainer/>
-//     )
-// }
-export default App;
-
 import React, { useState, useEffect } from 'react';
-import { View } from 'react-native';
-import DataDisplay from './DataDisplay';
+import { View, Text } from 'react-native';
+import axios from 'axios';
+import MainContainer from "./navigation/MainContainer";
 
 const App = () => {
     const [temperature, setTemperature] = useState(null);
     const [humidity, setHumidity] = useState(null);
 
     useEffect(() => {
-        fetch('http://192.168.100.42/get_data')
-            .then(response => response.json())
-            .then(data => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://192.168.3.67:3002/api/data', {timeout:  5000});
+                const data = response.data;
+
                 setTemperature(data.temperature);
                 setHumidity(data.humidity);
-            });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     return (
-        <View>
-            {temperature && humidity && <DataDisplay temperature={temperature} humidity={humidity} />}
-        </View>
+        <MainContainer
+            temperature = {temperature}
+            humidity = {humidity}/>
     );
 };
 

@@ -15,7 +15,7 @@ const detailsName="Details";
 const settingsName="Settings";
 
 const Tab=createBottomTabNavigator();
-export default function MainContainer(){
+export default function MainContainer({temperature, humidity}){
     return(
         <NavigationContainer>
             <Tab.Navigator
@@ -38,8 +38,11 @@ export default function MainContainer(){
                 },
             })}
             >
-              <Tab.Screen name={homeName} component={HomeScreen}/>
-              <Tab.Screen name={detailsName} component={DetailsScreen}/>
+                <Tab.Screen name={homeName}>
+                    {() => <HomeScreen temperature={temperature} humidity={humidity} />}
+                </Tab.Screen>
+
+                <Tab.Screen name={detailsName} component={DetailsScreen}/>
               <Tab.Screen name={settingsName} component={SettingsScreen}/>
             </Tab.Navigator>
         </NavigationContainer>
