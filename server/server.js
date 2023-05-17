@@ -1,5 +1,14 @@
 const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+const SerialPort = require('serialport');
+const Readline = SerialPort.parsers.Readline;
+const axios = require('axios');
+const serialPort = new SerialPort('/dev/ttyUSB0', { baudRate: 9600 });
+
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 const port = 3002;
 
 app.use(express.json());
@@ -24,22 +33,21 @@ app.post('/api/data', (req, res) => {
     currentTemperature = temperature;
     currentHumidity = humidity;
 
+    // Emit the new data to all connected clients
+    io.emit('data', { temperature, humidity });
+
     res.status(200).json({ message: 'Date primite cu succes!' });
 });
-app.listen(port, () => {
+
+server.listen(port, () => {
     console.log(`Server API pornit pe portul ${port}`);
 });
-
-const SerialPort = require('serialport');
-const Readline = SerialPort.parsers.Readline;
-const axios = require('axios');
-const serialPort = new SerialPort('/dev/ttyUSB0', { baudRate: 9600 });
 
 const parser = serialPort.pipe(new Readline({ delimiter: '\n' }));
 const apiEndpoint = 'http://192.168.3.67:3002/api/data';
 
 parser.on('data', line => {
-    const [temperature, humidity] = line.trim().split(',');
+    const [temperature, humidity] = line.trim().split(' ');
     const data = {
         temperature,
         humidity,
@@ -54,4 +62,5 @@ parser.on('data', line => {
         });
 });
 
+// Handle errors
 serialPort.on('error', error => console.error(error));
