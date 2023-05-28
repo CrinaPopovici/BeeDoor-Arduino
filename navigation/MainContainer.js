@@ -42,7 +42,6 @@ export default function MainContainer({temperature, humidity}){
                     {() => <HomeScreen temperature={temperature} humidity={humidity} />}
                 </Tab.Screen>
 
-                <Tab.Screen name={detailsName} component={DetailsScreen}/>
               <Tab.Screen name={settingsName} component={SettingsScreen}/>
             </Tab.Navigator>
         </NavigationContainer>

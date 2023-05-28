@@ -21,6 +21,7 @@ app.get('/api/data', (req, res) => {
         temperature: currentTemperature,
         humidity: currentHumidity
     });
+    console.log(res.json());
 });
 
 app.post('/api/data', (req, res) => {
@@ -44,7 +45,7 @@ server.listen(port, () => {
 });
 
 const parser = serialPort.pipe(new Readline({ delimiter: '\n' }));
-const apiEndpoint = 'http://192.168.3.67:3002/api/data';
+const apiEndpoint = 'http://192.168.1.168:3002/api/data';
 
 parser.on('data', line => {
     const [temperature, humidity] = line.trim().split(' ');

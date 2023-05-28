@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, Button} from 'react-native';
+
 import PowerScreen from "./PowerScreen";
 
 export default function SettingsScreen({navigation}){
@@ -12,3 +13,5 @@ export default function SettingsScreen({navigation}){
     );
 
 }
+
+
