@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 
-const SERVER_IP = '192.168.1.106'; // Adresa IP a Raspberry Pi care rulează serverul
-const SERVER_PORT = 12345; // Portul serverului
+const SERVER_IP = '192.168.1.108'; // Adresa IP a Raspberry Pi care rulează serverul
+const SERVER_PORT = 3002; // Portul serverului
 
 const sendCommand = (command) => {
     NetInfo.fetch().then((state) => {
         if (state.isConnected) {
-            axios.post(`http://${SERVER_IP}:${SERVER_PORT}`, { command })
+            axios.post(`http://${SERVER_IP}:${SERVER_PORT}/api/command`, { command })
                 .then(() => {
                     console.log('Comandă trimisă cu succes');
                 })
@@ -23,31 +23,63 @@ const sendCommand = (command) => {
 };
 
 const PowerScreen = () => {
-    const [motorOn, setMotorOn] = useState(false);
+    const [motorOnSalcam, setMotorOnSalcam] = useState(false);
+    const [motorOnFloareaSoarelui, setMotorOnFloareaSoarelui] = useState(false);
 
-    const handleMotorToggle = () => {
-        const command = motorOn ? 'STOP' : 'START';
-        console.log(`Stare curentă a motorului: ${motorOn}`);
+    const handleMotorSalcamToggle = () => {
+        const command = motorOnSalcam ? 'STOPSALCAM' : 'STARTSALCAM';
+        console.log(`Stare curentă a motorului: ${motorOnSalcam}`);
         console.log(`Comandă trimisă: ${command}`);
         sendCommand(command);
-        setMotorOn(!motorOn);
+        setMotorOnSalcam(!motorOnSalcam);
+    };
+    const handleMotorFloareaSoareluiToggle = () => {
+        const command = motorOnSalcam ? 'STOPFLOAREASOARELUI' : 'STARTFLOAREASOARELUI';
+        console.log(`Stare curentă a motorului: ${motorOnFloareaSoarelui}`);
+        console.log(`Comandă trimisă: ${command}`);
+        sendCommand(command);
+        setMotorOnFloareaSoarelui(!motorOnFloareaSoarelui);
     };
 
     return (
         <View style={styles.container}>
-            <Button
-                title={motorOn ? 'Oprire motor' : 'Pornire motor'}
-                onPress={handleMotorToggle}
-            />
+            <TouchableOpacity style={styles.button} onPress={handleMotorSalcamToggle}>
+                <Text style={styles.text}>{motorOnSalcam ? 'Oprire culegere la salcam' : 'Pornire culegere la salcam'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button2} onPress={handleMotorFloareaSoareluiToggle}>
+                <Text style={styles.text}>{motorOnFloareaSoarelui ? 'Oprire culegere la floarea soarelui' : 'Pornire culegere la floarea soarelui'}</Text>
+            </TouchableOpacity>
+
         </View>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
+        paddingTop: 5,
+        paddingBottom: 5,
+        marginBottom: Dimensions.get('window').height * 0.4, // 40% din inaltimea ecranului
+    },
+    button: {
+        width: '100%',
+        height: 60, // înălțime fixă
+        backgroundColor: '#010013',
         justifyContent: 'center',
+        alignItems: 'center',
+        //borderRadius: 5,
+    },
+    button2: {
+        width: '100%',
+        height: 60, // înălțime fixă
+        backgroundColor: '#e3e200',
+        justifyContent: 'center',
+        alignItems: 'center',
+        //borderRadius: 5,
+    },
+
+    text: {
+        color: 'white',
+        fontSize: 18,
     },
 });
 

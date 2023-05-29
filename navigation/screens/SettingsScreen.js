@@ -5,13 +5,8 @@ import PowerScreen from "./PowerScreen";
 
 export default function SettingsScreen({navigation}){
     return(
-        <View style={{flex: 1, alignItems: 'center', justifyContent:'center'}}>
-
+        <View style={{flex: 1, alignItems: 'stretch', justifyContent:'flex-start'}}>
             <PowerScreen/>
-
         </View>
     );
-
 }
-
-
