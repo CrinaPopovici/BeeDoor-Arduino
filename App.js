@@ -10,7 +10,7 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://192.168.1.108:3002/api/data', {timeout:  5000});
+                const response = await axios.get('http://172.20.10.10:3002/api/data', {timeout:  5000});
                 const data = response.data;
 
                 setTemperature(data.temperature);

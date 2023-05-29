@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-nati
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 
-const SERVER_IP = '192.168.1.108'; // Adresa IP a Raspberry Pi care rulează serverul
+const SERVER_IP = '172.20.10.10'; // Adresa IP a Raspberry Pi care rulează serverul
 const SERVER_PORT = 3002; // Portul serverului
 
 const sendCommand = (command) => {
