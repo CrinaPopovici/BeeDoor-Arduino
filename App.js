@@ -2,6 +2,7 @@ import { View, Text } from 'react-native';
 import axios from 'axios';
 import MainContainer from "./navigation/MainContainer";
 import {useEffect, useState} from "react";
+import LoginScreen from "./navigation/screens/LoginScreen";
 
 const App = () => {
     const [temperature, setTemperature] = useState(null);
@@ -24,9 +25,12 @@ const App = () => {
     }, []);
 
     return (
-        <MainContainer
-            temperature = {temperature}
-            humidity = {humidity}/>
+        // <MainContainer
+        //     temperature = {temperature}
+        //     humidity = {humidity}/>
+        <LoginScreen>
+
+        </LoginScreen>
     );
 };
 export default App;

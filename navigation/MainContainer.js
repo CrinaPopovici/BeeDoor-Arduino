@@ -8,18 +8,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import HomeScreen from "./screens/HomeScreen";
 import DetailsScreen from "./screens/DetailsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 //Screen names
 const homeName="Home";
 const detailsName="Details";
 const settingsName="Settings";
+const loginName = "Login";
 
 const Tab=createBottomTabNavigator();
 export default function MainContainer({temperature, humidity}){
     return(
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={homeName}
+                initialRouteName={loginName}
                 screenOptions={({route})=>({
                     tabBarIcon: ({focused, color, size})=>{
                         let iconName;
@@ -31,12 +33,16 @@ export default function MainContainer({temperature, humidity}){
                             iconName = focused ? 'list' : 'list-outline'
                         } else if(rn === settingsName){
                             iconName = focused ? 'settings' : 'settings-outline'
+                        } else if(rn === loginName){
+                            iconName = focused ? 'login' : 'login-outline'
                         }
                         return <Ionicons name={iconName} size={size} color={color}/>
                     },
                     tabBarActiveTintColor: 'black', // aici setezi culoarea dorită
                 })}
             >
+                <Tab.Screen name={loginName} component={LoginScreen}/>
+
                 <Tab.Screen name={homeName}>
                     {() => <HomeScreen temperature={temperature} humidity={humidity} />}
                 </Tab.Screen>
