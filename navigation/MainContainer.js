@@ -9,19 +9,23 @@ import HomeScreen from "./screens/HomeScreen";
 import DetailsScreen from "./screens/DetailsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+//import LoginScreen from "./screens/LoginScreen";
 
 //Screen names
 const homeName="Home";
 const detailsName="Details";
 const settingsName="Settings";
 const loginName = "Login";
+const registerName = "Register";
+
 
 const Tab=createBottomTabNavigator();
 export default function MainContainer({temperature, humidity}){
     return(
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={loginName}
+                initialRouteName={homeName} //sau homeName sau loginName sau registerName
                 screenOptions={({route})=>({
                     tabBarIcon: ({focused, color, size})=>{
                         let iconName;
@@ -33,6 +37,9 @@ export default function MainContainer({temperature, humidity}){
                             iconName = focused ? 'list' : 'list-outline'
                         } else if(rn === settingsName){
                             iconName = focused ? 'settings' : 'settings-outline'
+                        }
+                        else if(rn === registerName){
+                            iconName = focused ? 'register' : 'register-outline'
                         } else if(rn === loginName){
                             iconName = focused ? 'login' : 'login-outline'
                         }
@@ -42,6 +49,7 @@ export default function MainContainer({temperature, humidity}){
                 })}
             >
                 <Tab.Screen name={loginName} component={LoginScreen}/>
+                <Tab.Screen name={registerName} component={RegisterScreen}/>
 
                 <Tab.Screen name={homeName}>
                     {() => <HomeScreen temperature={temperature} humidity={humidity} />}

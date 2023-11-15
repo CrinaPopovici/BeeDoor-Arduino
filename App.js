@@ -3,6 +3,7 @@ import axios from 'axios';
 import MainContainer from "./navigation/MainContainer";
 import {useEffect, useState} from "react";
 import LoginScreen from "./navigation/screens/LoginScreen";
+import RegisterScreen from "./navigation/screens/RegisterScreen";
 
 const App = () => {
     const [temperature, setTemperature] = useState(null);
@@ -25,12 +26,16 @@ const App = () => {
     }, []);
 
     return (
-        // <MainContainer
-        //     temperature = {temperature}
-        //     humidity = {humidity}/>
-        <LoginScreen>
+        <MainContainer
+            temperature = {temperature}
+            humidity = {humidity}/>
+        // <LoginScreen>
+        //
+        // </LoginScreen>
 
-        </LoginScreen>
+        // <RegisterScreen>
+        //
+        // </RegisterScreen>
     );
 };
 export default App;
