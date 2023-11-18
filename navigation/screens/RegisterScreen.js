@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Dimensions, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Dimensions, View } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
 import {Routes} from  "./routes"
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,22 +13,54 @@ const RegisterScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.mainButtonsContainer}>
                 <Text style={styles.text2}>Sign up                               and jump right in</Text>
                 <TextInput
                     mode="outlined"
                     inputMode="text"
                     style={styles.input}
-                    placeholder="Name"
+                    placeholder="First Name"
                     placeholderTextColor="#666B78"
                     outlineStyle={styles.inputField}
                 />
-
+                <TextInput
+                    mode="outlined"
+                    inputMode="text"
+                    style={styles.input}
+                    placeholder="Last Name"
+                    placeholderTextColor="#666B78"
+                    outlineStyle={styles.inputField}
+                />
+                <TextInput
+                    mode="outlined"
+                    inputMode="text"
+                    style={styles.input}
+                    placeholder="Role"
+                    placeholderTextColor="#666B78"
+                    outlineStyle={styles.inputField}
+                />
+                <TextInput
+                    mode="outlined"
+                    inputMode="text"
+                    style={styles.input}
+                    placeholder="Gender"
+                    placeholderTextColor="#666B78"
+                    outlineStyle={styles.inputField}
+                />
                 <TextInput
                     mode="outlined"
                     inputMode="email"
                     style={styles.input}
                     placeholder="Email"
+                    placeholderTextColor="#666B78"
+                    outlineStyle={styles.inputField}
+                />
+                <TextInput
+                    mode="outlined"
+                    inputMode="Phone Number"
+                    style={styles.input}
+                    placeholder="Phone Number"
                     placeholderTextColor="#666B78"
                     outlineStyle={styles.inputField}
                 />
@@ -53,6 +85,8 @@ const RegisterScreen = () => {
             }}>
                 Got an account? Sign in!
             </Button>
+            </ScrollView>
+
         </SafeAreaView>
     );
 };
@@ -103,6 +137,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center'
+    },
+    scrollViewContainer: {
+        //flexGrow: 1,
+       // justifyContent: 'space-between'
     }
 });
 
