@@ -1,8 +1,8 @@
 
     export const Routes =  {
         Welcome: 'Welcome',
-        Login: 'Log in',
-        SignUp: 'Sign up',
+        Login: 'Login',
+        SignUp: 'Register',
         UserInfo: 'User info',
         UserActivityLevel: 'User activity level',
         UserGoal: 'User goal',

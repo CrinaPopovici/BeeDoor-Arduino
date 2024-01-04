@@ -16,8 +16,8 @@ import RegisterScreen from "./screens/RegisterScreen";
 const homeName="Home";
 const detailsName="Details";
 const settingsName="Settings";
-const loginName = "Login";
-const registerName = "Register";
+export const loginName = "Login";
+export const registerName = "Register";
 
 
 const Tab=createBottomTabNavigator();
@@ -25,7 +25,7 @@ export default function MainContainer({temperature, humidity}){
     return(
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={homeName} //sau homeName sau loginName sau registerName
+                initialRouteName={loginName} //sau homeName sau loginName sau registerName
                 screenOptions={({route})=>({
                     tabBarIcon: ({focused, color, size})=>{
                         let iconName;

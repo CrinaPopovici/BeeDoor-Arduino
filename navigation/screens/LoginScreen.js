@@ -1,7 +1,10 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Dimensions, View } from 'react-native';
 import { Button, Text, TextInput } from 'react-native-paper';
-import MainContainer from "../MainContainer";
+import { useNavigation} from "@react-navigation/native";
+import { registerName } from "../MainContainer"
+import RegisterScreen from "./RegisterScreen";
+import {Routes} from "./routes";
 // import { Colors } from '../constants';
 // import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import { Routes } from '../routes/routes';
@@ -13,7 +16,7 @@ import MainContainer from "../MainContainer";
 const LoginScreen = () => {
     const [hidePassword, setHidePassword] = React.useState(true);
     //   const route = useRoute<RouteType>();
-
+    const navigation = useNavigation();
     return (
         // <KeyboardAwareScrollView style={styles.background}>
         <SafeAreaView style={styles.container}>
@@ -39,8 +42,10 @@ const LoginScreen = () => {
                 </Button>
                 <Text style={styles.registerText} >
                     Don't have an account? {"\n"}
-                    Register now!
                 </Text>
+                <Text style={styles.registerText} onPress={()=> navigation.navigate(Routes.SignUp)}>
+                Register now!
+            </Text>
             </View>
             <Button mode="text" style={styles.button}>
                 Forgot password?

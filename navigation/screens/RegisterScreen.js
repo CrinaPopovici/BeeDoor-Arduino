@@ -5,6 +5,8 @@ import {Routes} from  "./routes"
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import type {RouteParams} from "../../routes/types";
+import { loginName } from "../MainContainer"
+
 type RoutePropType = StackNavigationProp<RouteParams, Routes.SignUp>;
 
 const RegisterScreen = () => {
