@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ const SERVER_PORT = 3002; // Portul serverului
 const sendCommand = (command) => {
     NetInfo.fetch().then((state) => {
         if (state.isConnected) {
-            axios.post(`http://${SERVER_IP}:${SERVER_PORT}/api/command`, { command })
+            axios.post(`http://${SERVER_IP}:${SERVER_PORT}/api/command`, {command})
                 .then(() => {
                     console.log('Comandă trimisă cu succes');
                 })
@@ -44,10 +44,12 @@ const PowerScreen = () => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.button} onPress={handleMotorSalcamToggle}>
-                <Text style={styles.text}>{motorOnSalcam ? 'Oprire culegere la salcam' : 'Pornire culegere la salcam'}</Text>
+                <Text
+                    style={styles.text}>{motorOnSalcam ? 'Oprire culegere la salcam' : 'Pornire culegere la salcam'}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button2} onPress={handleMotorFloareaSoareluiToggle}>
-                <Text style={styles.text}>{motorOnFloareaSoarelui ? 'Oprire culegere la floarea soarelui' : 'Pornire culegere la floarea soarelui'}</Text>
+                <Text
+                    style={styles.text}>{motorOnFloareaSoarelui ? 'Oprire culegere la floarea soarelui' : 'Pornire culegere la floarea soarelui'}</Text>
             </TouchableOpacity>
 
         </View>

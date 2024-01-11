@@ -1,24 +1,19 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, Dimensions, View } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
-import { useNavigation} from "@react-navigation/native";
-import { registerName } from "../MainContainer"
+import React, {useContext, useEffect} from 'react';
+import {SafeAreaView, StyleSheet, Dimensions, View} from 'react-native';
+import {Button, Text, TextInput} from 'react-native-paper';
+import {useNavigation} from "@react-navigation/native";
+import {homeName, registerName} from "../MainContainer"
 import RegisterScreen from "./RegisterScreen";
 import {Routes} from "./routes";
-// import { Colors } from '../constants';
-// import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-// import { Routes } from '../routes/routes';
-// import { RouteProp, useRoute } from '@react-navigation/native';
-// import { RouteParams } from '../routes/types';
+import AuthContext from "./AuthContext";
 
-// type RouteType = RouteProp<RouteParams, Routes.Login>;
 
-const LoginScreen = () => {
+const LoginScreen = ({onLogin}) => {
     const [hidePassword, setHidePassword] = React.useState(true);
-    //   const route = useRoute<RouteType>();
     const navigation = useNavigation();
+
+
     return (
-        // <KeyboardAwareScrollView style={styles.background}>
         <SafeAreaView style={styles.container}>
             <View style={styles.mainButtonsContainer}>
                 <Text style={styles.logo}>Log in</Text>
@@ -35,33 +30,29 @@ const LoginScreen = () => {
                     mode="outlined"
                     outlineStyle={styles.inputField}
                     secureTextEntry={hidePassword}
-                    right={<TextInput.Icon icon="eye" onPress={() => setHidePassword(!hidePassword)} />}
+                    right={<TextInput.Icon icon="eye" onPress={() => setHidePassword(!hidePassword)}/>}
                 />
-                <Button mode="contained" style={styles.button} onPress={() => navigation.navigate('MainContainer')}>
+                <Button mode="contained" style={styles.button} onPress={() => navigation.navigate(homeName)}>
                     Login
                 </Button>
-                <Text style={styles.registerText} >
+                <Text style={styles.registerText}>
                     Don't have an account? {"\n"}
                 </Text>
-                <Text style={styles.registerText} onPress={()=> navigation.navigate(Routes.SignUp)}>
-                Register now!
-            </Text>
+                <Text style={styles.registerText} onPress={() => navigation.navigate(Routes.SignUp)}>
+                    Register now!
+                </Text>
             </View>
             <Button mode="text" style={styles.button}>
                 Forgot password?
             </Button>
         </SafeAreaView>
-        // </KeyboardAwareScrollView>
     );
 };
 
 const styles = StyleSheet.create({
-    background: {
-        // backgroundColor: Colors.background,
-    },
+    background: {},
     inputField: {
         borderRadius: 5,
-        // backgroundColor: Colors.inputBackground,
         borderWidth: 0,
     },
     mainButtonsContainer: {
@@ -77,7 +68,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: Dimensions.get('window').height,
         width: '100%',
-        // backgroundColor: Colors.background,
     },
     input: {
         width: '90%',
@@ -90,6 +80,7 @@ const styles = StyleSheet.create({
     button: {
         marginVertical: 20,
         width: '90%',
+        backgroundColor: '#ffd407',
     },
     registerText: {
         textAlign: "center"

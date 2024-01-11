@@ -1,41 +1,27 @@
-import { View, Text } from 'react-native';
-import axios from 'axios';
-import MainContainer from "./navigation/MainContainer";
-import {useEffect, useState} from "react";
+import React from 'react';
+import {NavigationContainer} from "@react-navigation/native";
+import {createStackNavigator} from "@react-navigation/stack";
+import WelcomeScreen from './navigation/screens/WelcomeScreen';
+import HomeScreen from './navigation/screens/HomeScreen';
 import LoginScreen from "./navigation/screens/LoginScreen";
 import RegisterScreen from "./navigation/screens/RegisterScreen";
+import PowerScreen from "./navigation/screens/PowerScreen";
+import SettingsScreen from "./navigation/screens/SettingsScreen";
 
-const App = () => {
-    const [temperature, setTemperature] = useState(null);
-    const [humidity, setHumidity] = useState(null);
+const RootStack = createStackNavigator();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://172.20.10.10:3002/api/data', {timeout:  5000});
-                const data = response.data;
-
-                setTemperature(data.temperature);
-                setHumidity(data.humidity);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
+export default function App() {
     return (
-        <MainContainer
-            temperature = {temperature}
-            humidity = {humidity}/>
-        // <LoginScreen>
-        //
-        // </LoginScreen>
+        <NavigationContainer>
+            <RootStack.Navigator>
+                <RootStack.Screen name="Welcome" component={WelcomeScreen}/>
+                <RootStack.Screen name="Home" component={HomeScreen}/>
+                <RootStack.Screen name="Login" component={LoginScreen}/>
+                <RootStack.Screen name="SignUp" component={RegisterScreen}/>
+                <RootStack.Screen name="Settings" component={SettingsScreen}/>
+                <RootStack.Screen name="Power" component={PowerScreen}/>
 
-        // <RegisterScreen>
-        //
-        // </RegisterScreen>
+            </RootStack.Navigator>
+        </NavigationContainer>
     );
-};
-export default App;
+}

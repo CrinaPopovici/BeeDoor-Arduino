@@ -1,11 +1,13 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Dimensions, View } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
-import {Routes} from  "./routes"
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
+import React, {useContext, useEffect} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Dimensions, View} from 'react-native';
+import {Button, Text, TextInput} from 'react-native-paper';
+import {Routes} from "./routes"
+import {StackNavigationProp} from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import type {RouteParams} from "../../routes/types";
-import { loginName } from "../MainContainer"
+import {homeName, loginName} from "../MainContainer"
+import AuthContext from "./AuthContext";
+import WelcomeScreen from "./WelcomeScreen";
 
 type RoutePropType = StackNavigationProp<RouteParams, Routes.SignUp>;
 
@@ -15,9 +17,8 @@ const RegisterScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.mainButtonsContainer}>
-                <Text style={styles.text2}>Sign up                               and jump right in</Text>
+                <Text style={styles.text2}>Sign up </Text>
                 <TextInput
                     mode="outlined"
                     inputMode="text"
@@ -44,14 +45,6 @@ const RegisterScreen = () => {
                 />
                 <TextInput
                     mode="outlined"
-                    inputMode="text"
-                    style={styles.input}
-                    placeholder="Gender"
-                    placeholderTextColor="#666B78"
-                    outlineStyle={styles.inputField}
-                />
-                <TextInput
-                    mode="outlined"
                     inputMode="email"
                     style={styles.input}
                     placeholder="Email"
@@ -72,22 +65,19 @@ const RegisterScreen = () => {
                     placeholderTextColor="#666B78"
                     mode="outlined"
                     outlineStyle={styles.inputField}
-                    right={<TextInput.Icon icon="eye" onPress={() => setHidePassword(!hidePassword)} />}
+                    right={<TextInput.Icon icon="eye" onPress={() => setHidePassword(!hidePassword)}/>}
 
                 />
 
-                <Button mode="contained" style={styles.button} onPress={() => {
-                    navigation.navigate(Routes.Login)
-                }} >
+                <Button mode="contained" style={styles.button} onPress={() => navigation.navigate(homeName)}>
                     Register
                 </Button>
             </View>
-            <Button mode="text" style={styles.button} onPress={() => {
+            <Button mode="text" style={styles.signInText} onPress={() => {
                 navigation.navigate(Routes.Login);
             }}>
                 Got an account? Sign in!
             </Button>
-            </ScrollView>
 
         </SafeAreaView>
     );
@@ -133,17 +123,27 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     button: {
-        marginVertical: 20,
+        marginTop: 15,
+        marginBottom: 55,
         width: '87.2%',
-        height: 60,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        backgroundColor: '#ffd407',
+
     },
-    scrollViewContainer: {
-        //flexGrow: 1,
-       // justifyContent: 'space-between'
+    signInText: {
+        marginTop: 15,
+        marginBottom: 55,
+        width: '87.2%',
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        color: '#ffd407',
     }
+
 });
 
 export default RegisterScreen;
