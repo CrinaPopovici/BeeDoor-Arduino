@@ -1,11 +1,11 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net8.0": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net8.0": []
   },
   "packageFolders": {
     "C:\\Users\\xCrina\\.nuget\\packages\\": {}
@@ -13,26 +13,26 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.Business\\Backend.Business.csproj",
+      "projectUniqueName": "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.Business\\Backend.Business.csproj",
       "projectName": "Backend.Business",
-      "projectPath": "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.Business\\Backend.Business.csproj",
+      "projectPath": "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.Business\\Backend.Business.csproj",
       "packagesPath": "C:\\Users\\xCrina\\.nuget\\packages\\",
-      "outputPath": "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.Business\\obj\\",
+      "outputPath": "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.Business\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\xCrina\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net7.0"
+        "net8.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "projectReferences": {}
         }
       },
@@ -48,8 +48,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "net7.0",
+      "net8.0": {
+        "targetAlias": "net8.0",
         "imports": [
           "net461",
           "net462",
@@ -66,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

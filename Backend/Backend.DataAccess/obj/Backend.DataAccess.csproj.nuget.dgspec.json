@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj": {}
+    "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj": {}
   },
   "projects": {
-    "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj": {
+    "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj",
+        "projectUniqueName": "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj",
         "projectName": "Backend.DataAccess",
-        "projectPath": "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj",
+        "projectPath": "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\Backend.DataAccess.csproj",
         "packagesPath": "C:\\Users\\xCrina\\.nuget\\packages\\",
-        "outputPath": "D:\\TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\obj\\",
+        "outputPath": "D:\\#TOT CE MA AJUTA PENTRU LICENTA\\#PROIECT\\BeeDoor-Arduino\\Backend\\Backend.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\xCrina\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -42,8 +42,8 @@
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "imports": [
             "net461",
             "net462",
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
