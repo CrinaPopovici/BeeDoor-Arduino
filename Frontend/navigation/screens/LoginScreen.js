@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Dimensions, View} from 'react-native';
 import {Button, Text, TextInput} from 'react-native-paper';
 import {useNavigation} from "@react-navigation/native";
-import {homeName, registerName} from "../MainContainer"
+import {registerName} from "../MainContainer"
 import RegisterScreen from "./RegisterScreen";
 import {Routes} from "./routes";
 import AuthContext from "./AuthContext";
@@ -32,7 +32,7 @@ const LoginScreen = ({onLogin}) => {
                     secureTextEntry={hidePassword}
                     right={<TextInput.Icon icon="eye" onPress={() => setHidePassword(!hidePassword)}/>}
                 />
-                <Button mode="contained" style={styles.button} onPress={() => navigation.navigate(homeName)}>
+                <Button mode="contained" style={styles.button} onPress={() => navigation.navigate('Main')}>
                     Login
                 </Button>
                 <Text style={styles.registerText}>
