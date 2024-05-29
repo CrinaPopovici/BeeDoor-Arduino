@@ -3,3 +3,7 @@
 /workspace.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+# Visual Studio specific files
+.vscode/
+.vs/
+*.vsidx
