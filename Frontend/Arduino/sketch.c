@@ -1,84 +1,91 @@
-#include <DHT.h>
-#include <Stepper.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <SimpleDHT.h>
 
-#define DHTPIN 2
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+const int dht_pin = D7; 
+SimpleDHT11 dht11;
 
-#define IN1 8
-#define IN2 9
-#define IN3 10
-#define IN4 11
+const char* ssid = "Seco";
+const char* password = "secosanpq1";
 
-const int stepsPerRevolution = 64;
-///const int steptPerRevolutionSun = 256;
-Stepper myStepper(stepsPerRevolution, IN1, IN3, IN2, IN4);
+ESP8266WebServer server(80);
 
-// Add a variable to keep track of whether the motor has been rotated
-bool motorRotated = false;
+unsigned long previousMillis = 0; 
+const long interval = 2000; 
+
+void handleRoot() {
+  String html = "<h1>ESP8266 Web Server</h1><p>Use /temperature for temperature and /humidity for humidity.</p>";
+  server.send(200, "text/html", html);
+}
+
+void handleTemperature() {
+  byte temperature = 0;
+  byte humidity = 0;
+  int err = dht11.read(dht_pin, &temperature, &humidity, NULL);
+  if (err != SimpleDHTErrSuccess) {
+    server.send(500, "text/plain", "Loading...");
+    return;
+  }
+  server.send(200, "text/plain", String(temperature));
+}
+
+void handleHumidity() {
+  byte temperature = 0;
+  byte humidity = 0;
+  int err = dht11.read(dht_pin, &temperature, &humidity, NULL);
+  if (err != SimpleDHTErrSuccess) {
+    server.send(500, "text/plain", "Loading...");
+    return;
+  }
+  server.send(200, "text/plain", String(humidity));
+}
 
 void setup() {
-  Serial.begin(9600);
-  dht.begin();
-  myStepper.setSpeed(5);
+  Serial.begin(115200);
+  delay(500);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  server.on("/", handleRoot);
+  server.on("/temperature", handleTemperature);
+  server.on("/humidity", handleHumidity);
+
+  server.begin();
+  Serial.println("HTTP server started");
 }
 
 void loop() {
-  float temperature = dht.readTemperature();
-  float humidity = dht.readHumidity();
+  server.handleClient();
+  
+  unsigned long currentMillis = millis();
+  
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
 
-  if (temperature >= 28 && !motorRotated) {
-    //Serial.println("Temperature is above 24.5C, rotating stepper motor.");
-    for (int i = 0; i < 2; i++) {
-      myStepper.step(stepsPerRevolution);
-      delay(500);
+    byte temperature = 0;
+    byte humidity = 0;
+    int err = dht11.read(dht_pin, &temperature, &humidity, NULL);
+    if (err != SimpleDHTErrSuccess) {
+      Serial.println("Failed to read from DHT sensor!");
+      return;
     }
 
-    // Update the motorRotated variable after rotating the motor
-    motorRotated = true;
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.println(" *C");
+    Serial.print("Humidity: ");
+    Serial.print(humidity);
+    Serial.println(" H");
+    Serial.println();
   }
-
-  Serial.print(" ");
-  Serial.print(temperature);
-  Serial.print(" ");
-  Serial.print(humidity);
-  Serial.print("\n");
-
-
-
-
-    if (Serial.available() > 0) {
-    String command = Serial.readStringUntil('\n');
-    command.trim();
-    command.replace("\n", "");
-    command.replace("\r", "");
-
-    if (command == "STARTSALCAM") {
-      Serial.println("Received START command. Starting motor.");
-      for (int i = 0; i < 2; i++) {
-        myStepper.step(stepsPerRevolution);
-        delay(500);
-      }
-    } else if (command == "STOPSALCAM") {
-      Serial.println("Received STOP command. Stopping motor.");
-      for (int i = 0; i < 2; i++) {
-        myStepper.step(-stepsPerRevolution);
-        delay(500);
-      }
-    } else if (command == "STARTFLOAREASOARELUI") {
-      Serial.println("Received STOP command. Stopping motor.");
-      for (int i = 0; i < 2; i++) {
-        myStepper.step(stepsPerRevolution/2);
-        delay(500);
-      }
-    }  else if (command == "STOPFLOAREASOARELUI") {
-      Serial.println("Received STOP command. Stopping motor.");
-      for (int i = 0; i < 2; i++) {
-        myStepper.step(-stepsPerRevolution/2);
-        delay(500);
-      }
-    }
-  }
-
-  delay(5000);
 }

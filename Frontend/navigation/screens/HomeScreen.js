@@ -5,6 +5,10 @@ import { Button } from "react-native-paper";
 
 const image = require("../bee.jpg");
 
+
+
+
+
 export default function HomeScreen({ navigation }) {
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
@@ -42,6 +46,9 @@ export default function HomeScreen({ navigation }) {
   },[])
   console.log(humidity);
   console.log(temperature);
+
+
+
   return (
     <ImageBackground source={image} style={styles.container}>
       <View style={styles.contentContainer}>
