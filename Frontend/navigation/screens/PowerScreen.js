@@ -69,16 +69,12 @@ const PowerScreen = () => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={turnOn}>
         <Text style={styles.text}>
-          {motorOnSalcam
-            ? "Oprire culegere la salcam"
-            : "Pornire culegere la salcam"}
+          {motorOnSalcam ? "Pornire culegere" : "Pornire culegere"}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button2} onPress={turnOff}>
         <Text style={styles.text}>
-          {motorOnFloareaSoarelui
-            ? "Oprire culegere la floarea soarelui"
-            : "Pornire culegere la floarea soarelui"}
+          {motorOnFloareaSoarelui ? "Oprire culegere" : "Oprire culegere"}
         </Text>
       </TouchableOpacity>
     </View>
