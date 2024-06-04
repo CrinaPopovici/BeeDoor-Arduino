@@ -24,12 +24,12 @@ export default function HomeScreen({ navigation }) {
       }
     };
 
-   fetchData();
+    fetchData();
     const interval = setInterval(fetchData, 5000); // Fetch data every 2 seconds
-    return () => clearInterval(interval, interval1);
+    return () => clearInterval(interval, interval);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     //Humidity
     const fetchHumidity = async () => {
       try {
@@ -42,12 +42,10 @@ export default function HomeScreen({ navigation }) {
     };
     fetchHumidity();
     const interval = setInterval(fetchHumidity, 10000); // Fetch data every 2 seconds
-    return () => clearInterval(interval, interval1);
-  },[])
+    return () => clearInterval(interval, interval);
+  }, []);
   console.log(humidity);
   console.log(temperature);
-
-
 
   return (
     <ImageBackground source={image} style={styles.container}>

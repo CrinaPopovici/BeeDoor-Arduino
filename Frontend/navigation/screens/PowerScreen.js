@@ -34,7 +34,7 @@ export const turnOn = async () => {
   try {
     await fetch(`${ESP8266_IP}/openDoor`);
   } catch (error) {
-    Alert.alert("Eroare la aprinderea becului");
+    Alert.alert("Eroare la deschiderea usii");
   }
 };
 
@@ -42,7 +42,7 @@ export const turnOff = async () => {
   try {
     await fetch(`${ESP8266_IP}/closeDoor`);
   } catch (error) {
-    Alert.alert("Eroare la stingerea becului");
+    Alert.alert("Eroare la inchiderea usii");
   }
 };
 

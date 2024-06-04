@@ -39,3 +39,4 @@ bld/
 
 # Ignore appsettings.Development.json
 appsettings.Development.json
+/Backend/Backend/appsettings.Development.json
