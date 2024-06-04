@@ -1,18 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   Dimensions,
   View,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
+import { Ionicons } from "react-native-vector-icons";
 import { Routes } from "./routes";
 import { useNavigation } from "@react-navigation/native";
-import { homeName, loginName } from "../MainContainer";
-import AuthContext from "./AuthContext";
-import WelcomeScreen from "./WelcomeScreen";
 
 const RegisterScreen = () => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -66,7 +64,7 @@ const RegisterScreen = () => {
         const resData = JSON.parse(textResponse); // Parse the text response as JSON
         console.log("Response data:", resData); // DEBUG log
         setResponse(resData);
-        setMessage("Registerred successfully!");
+        setMessage("Registered successfully!");
         Alert.alert("Success", "Register successful!");
       } catch (jsonError) {
         console.error("Error parsing JSON response:", jsonError);
@@ -74,8 +72,11 @@ const RegisterScreen = () => {
       }
     } catch (error) {
       console.error("Error making POST request:", error);
-      setMessage(`Login failed. Please try again. ${error.message}`);
-      Alert.alert("Error", `Login failed. Please try again. ${error.message}`);
+      setMessage(`Register failed. Please try again. ${error.message}`);
+      Alert.alert(
+        "Error",
+        `Register failed. Please try again. ${error.message}`
+      );
     }
   };
 
@@ -85,7 +86,6 @@ const RegisterScreen = () => {
         <Text style={styles.text2}>Sign up </Text>
         <TextInput
           mode="outlined"
-          inputMode="text"
           style={styles.input}
           placeholder="Full Name"
           value={credentials.fullName}
@@ -95,7 +95,6 @@ const RegisterScreen = () => {
         />
         <TextInput
           mode="outlined"
-          inputMode="text"
           style={styles.input}
           placeholder="Username"
           value={credentials.username}
@@ -105,7 +104,6 @@ const RegisterScreen = () => {
         />
         <TextInput
           mode="outlined"
-          inputMode="text"
           style={styles.input}
           placeholder="Role"
           value={credentials.role}
@@ -115,7 +113,6 @@ const RegisterScreen = () => {
         />
         <TextInput
           mode="outlined"
-          inputMode="text"
           style={styles.input}
           placeholder="Gender"
           value={credentials.gender}
@@ -125,7 +122,6 @@ const RegisterScreen = () => {
         />
         <TextInput
           mode="outlined"
-          inputMode="email"
           style={styles.input}
           placeholder="Email"
           value={credentials.email}
@@ -135,7 +131,6 @@ const RegisterScreen = () => {
         />
         <TextInput
           mode="outlined"
-          inputMode="Phone Number"
           style={styles.input}
           placeholder="Phone Number"
           value={credentials.phoneNumber}
@@ -143,28 +138,29 @@ const RegisterScreen = () => {
           placeholderTextColor="#666B78"
           outlineStyle={styles.inputField}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={credentials.password}
-          onChangeText={(text) => handleChange("password", text)}
-          placeholderTextColor="#666B78"
-          mode="outlined"
-          outlineStyle={styles.inputField}
-          right={
-            <TextInput.Icon
-              icon="eye"
-              onPress={() => setHidePassword(!hidePassword)}
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Password"
+            value={credentials.password}
+            onChangeText={(text) => handleChange("password", text)}
+            placeholderTextColor="#666B78"
+            mode="outlined"
+            outlineStyle={styles.inputField}
+            secureTextEntry={hidePassword}
+          />
+          <TouchableOpacity
+            onPress={() => setHidePassword(!hidePassword)}
+            style={styles.iconContainer}
+          >
+            <Ionicons
+              name={hidePassword ? "eye-off" : "eye"}
+              size={24}
+              color="gray"
             />
-          }
-        />
-
-        <Button
-          mode="contained"
-          style={styles.button}
-          //onPress={() => navigation.navigate(homeName)}
-          onPress={handleSubmit}
-        >
+          </TouchableOpacity>
+        </View>
+        <Button mode="contained" style={styles.button} onPress={handleSubmit}>
           Register
         </Button>
       </View>
@@ -205,6 +201,17 @@ const styles = StyleSheet.create({
     width: "90%",
     marginVertical: 10,
     color: "#666B78",
+  },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "90%",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  iconContainer: {
+    padding: 10,
   },
   logo: {
     fontSize: 30,
