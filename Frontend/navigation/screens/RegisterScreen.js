@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { Routes } from "./routes";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { homeName, loginName } from "../MainContainer";
 import AuthContext from "./AuthContext";

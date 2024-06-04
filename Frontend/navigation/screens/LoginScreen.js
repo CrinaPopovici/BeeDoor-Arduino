@@ -8,9 +8,12 @@ import {
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+
 import { Routes } from "./routes";
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
+
   const [credentials, setCredentials] = useState({
     usernameOrEmail: "",
     password: "",
@@ -102,7 +105,10 @@ const LoginScreen = () => {
         <Text style={styles.registerText}>Don't have an account? {"\n"}</Text>
         <Text
           style={styles.registerText}
-          onPress={() => navigation.navigate(Routes.SignUp)}
+          //onPress={() => navigation.navigate(Routes.SignUp)}
+          onPress={() => {
+            navigation.navigate(Routes.SignUp);
+          }}
         >
           Register now!
         </Text>
