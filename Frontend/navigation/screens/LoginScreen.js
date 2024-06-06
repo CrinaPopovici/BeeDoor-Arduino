@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { TextInput } from "react-native-paper";
-import { Ionicons } from 'react-native-vector-icons';
+import { Ionicons } from "react-native-vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Routes } from "../routing/routes";
 
-import { Routes } from "./routes";
-
+import NgrokId from "../Components/NgrokId";
 const LoginScreen = () => {
   const navigation = useNavigation();
 
@@ -34,7 +34,7 @@ const LoginScreen = () => {
 
   const handleSubmit = async () => {
     setMessage("");
-    const url = "https://459a-79-114-82-141.ngrok-free.app/api/auth/login";
+    const url = `https://${NgrokId.id}.ngrok-free.app/api/auth/login`;
 
     console.log("Submitting credentials:", credentials);
 

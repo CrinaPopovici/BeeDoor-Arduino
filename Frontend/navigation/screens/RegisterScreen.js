@@ -9,12 +9,15 @@ import {
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { Ionicons } from "react-native-vector-icons";
-import { Routes } from "./routes";
+import { Routes } from "../routing/routes";
 import { useNavigation } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
+import NgrokId from "../Components/NgrokId";
 
 const RegisterScreen = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const navigation = useNavigation();
+  const [gender, setGender] = useState("");
 
   const [credentials, setCredentials] = useState({
     fullName: "",
@@ -37,7 +40,7 @@ const RegisterScreen = () => {
 
   const handleSubmit = async () => {
     setMessage("");
-    const url = "https://459a-79-114-82-141.ngrok-free.app/api/auth/register";
+    const url = `https://${NgrokId.id}.ngrok-free.app/api/auth/register`;
 
     console.log("Submitting credentials:", credentials);
 
@@ -111,15 +114,15 @@ const RegisterScreen = () => {
           placeholderTextColor="#666B78"
           outlineStyle={styles.inputField}
         />
-        <TextInput
-          mode="outlined"
-          style={styles.input}
-          placeholder="Gender"
-          value={credentials.gender}
-          onChangeText={(text) => handleChange("gender", text)}
-          placeholderTextColor="#666B78"
-          outlineStyle={styles.inputField}
-        />
+        <Picker
+          selectedValue={gender}
+          style={styles.picker}
+          onValueChange={(itemValue) => handleChange("gender", itemValue)}
+        >
+          <Picker.Item label="Select Gender" value="" />
+          <Picker.Item label="Male" value="male" />
+          <Picker.Item label="Female" value="female" />
+        </Picker>
         <TextInput
           mode="outlined"
           style={styles.input}
@@ -245,6 +248,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     color: "#ffd407",
+  },
+  picker: {
+    height: 50,
+    width: 200,
+    color: "#666B78",
   },
 });
 

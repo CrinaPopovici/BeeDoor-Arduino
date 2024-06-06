@@ -1,9 +1,11 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <SimpleDHT.h>
+#include <Servo.h>
 
 const int dht_pin = D7; 
 SimpleDHT11 dht11;
+Servo door;
 
 const char* ssid = "Seco";
 const char* password = "secosanpq1";
@@ -40,9 +42,38 @@ void handleHumidity() {
   server.send(200, "text/plain", String(humidity));
 }
 
+void openDoor() {
+    door.attach(D0, 500, 2400); // Atașează servomotorul
+    int pos = 90;
+    door.write(pos);
+    delay(15);
+    door.detach();
+    Serial.print("Servo Angle: ");
+    Serial.println(pos);
+    server.send(200, "text/plain", "");
+}
+
+void closeDoor() {
+    door.attach(D0, 500, 2400); // Atașează servomotorul
+    int pos = 180;
+    door.write(pos);
+    delay(15);
+    door.detach();
+    Serial.print("Servo Angle: ");
+    Serial.println(pos);
+    
+ 
+    server.send(200, "text/plain", "");
+  
+}
+
 void setup() {
   Serial.begin(115200);
   delay(500);
+
+    door.attach(D0, 500, 2400);   ////la esp8266 e problema si daca scrii normal adica doar D1, motorul merge maxim 90 de grade
+    door.write(180); // Setează poziția inițială a servomotorului la 180 de grade (0 grade la mine ca e motorul pus invers)
+//    door.detach();
 
   WiFi.begin(ssid, password);
 
@@ -59,6 +90,8 @@ void setup() {
   server.on("/", handleRoot);
   server.on("/temperature", handleTemperature);
   server.on("/humidity", handleHumidity);
+  server.on("/openDoor", openDoor);
+  server.on("/closeDoor", closeDoor);
 
   server.begin();
   Serial.println("HTTP server started");
@@ -89,3 +122,4 @@ void loop() {
     Serial.println();
   }
 }
+
