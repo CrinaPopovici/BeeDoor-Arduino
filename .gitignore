@@ -37,6 +37,12 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Ignore firebaseConfig.js
+/Frontend/navigation/routing/firebaseConfig.js
+
 # Ignore appsettings.Development.json
 appsettings.Development.json
 /Backend/Backend/appsettings.Development.json
+
+#Ignore FirebaseConfiguration.h
+/sketch/FirebaseConfiguration.h

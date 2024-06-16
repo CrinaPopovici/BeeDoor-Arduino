@@ -1,67 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { ImageBackground, StyleSheet, View, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Button } from "react-native-paper";
+
+import { getData } from "../routing/firebase";
 
 const image = require("../bee.jpg");
 
-
-
-
-
 export default function HomeScreen({ navigation }) {
-  const [temperature, setTemperature] = useState(null);
-  const [humidity, setHumidity] = useState(null);
+  const [indoorTemp, setIndoorTemp] = useState(null);
+  const [indoorHumidity, setIndoorHumidity] = useState(null);
+  const [outdoorTemp, setOutdoorTemp] = useState(null);
+  const [outdoorHumidity, setOutdoorHumidity] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const tempResponse = await fetch("http://192.168.3.218/temperature");
-        const tempData = await tempResponse.text();
-        setTemperature(tempData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-    const interval = setInterval(fetchData, 5000); // Fetch data every 2 seconds
-    return () => clearInterval(interval, interval);
+    getData("/indoor/temperature", (data) => {
+      console.log("Indoor Temperature: ", data);
+      setIndoorTemp(data);
+    });
+    getData("/indoor/humidity", (data) => {
+      console.log("Indoor Humidity: ", data);
+      setIndoorHumidity(data);
+    });
+    getData("/outdoor/temperature", (data) => {
+      console.log("Outdoor Temperature: ", data);
+      setOutdoorTemp(data);
+    });
+    getData("/outdoor/humidity", (data) => {
+      console.log("Outdoor Humidity: ", data);
+      setOutdoorHumidity(data);
+    });
   }, []);
 
-  useEffect(() => {
-    //Humidity
-    const fetchHumidity = async () => {
-      try {
-        const humResponse = await fetch("http://192.168.3.218/humidity");
-        const humData = await humResponse.text();
-        setHumidity(humData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchHumidity();
-    const interval = setInterval(fetchHumidity, 10000); // Fetch data every 2 seconds
-    return () => clearInterval(interval, interval);
-  }, []);
-  console.log(humidity);
-  console.log(temperature);
+  // console.log(humidity);
+  // console.log(temperature);
 
   return (
     <ImageBackground source={image} style={styles.container}>
       <View style={styles.contentContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.label}>
-            Humidity: {humidity ? `${humidity} %` : "Loading..."}
-          </Text>
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.label}>
-            Temperature: {temperature ? `${temperature} °C` : "Loading..."}
-          </Text>
-        </View>
+        <Text>
+          Indoor Temperature: {indoorTemp !== null ? indoorTemp : "Loading..."}{" "}
+          °C
+        </Text>
+        <Text>
+          Indoor Humidity:{" "}
+          {indoorHumidity !== null ? indoorHumidity : "Loading..."} %
+        </Text>
+        <Text>
+          Outdoor Temperature:{" "}
+          {outdoorTemp !== null ? outdoorTemp : "Loading..."} °C
+        </Text>
+        <Text>
+          Outdoor Humidity:{" "}
+          {outdoorHumidity !== null ? outdoorHumidity : "Loading..."} %
+        </Text>
       </View>
-
       <StatusBar style="auto" />
     </ImageBackground>
   );
