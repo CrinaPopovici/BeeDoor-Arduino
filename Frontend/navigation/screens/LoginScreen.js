@@ -47,19 +47,19 @@ const LoginScreen = () => {
         body: JSON.stringify(credentials),
       });
 
-      console.log("Response status:", res.status); //DEBUG log
+      console.log("Response status:", res.status); 
 
-      const textResponse = await res.text(); // DEBUG Get the response as text
-      console.log("Response text:", textResponse); // DEBUG log
+      const textResponse = await res.text(); 
+      console.log("Response text:", textResponse);
 
       if (!res.ok) {
-        console.log("Response error:", textResponse); // DEBUG log
+        console.log("Response error:", textResponse); 
         throw new Error(`Error: ${res.status} - ${textResponse}`);
       }
 
       try {
-        const resData = JSON.parse(textResponse); // Parse the text response as JSON
-        console.log("Response data:", resData); // DEBUG log
+        const resData = JSON.parse(textResponse); 
+        console.log("Response data:", resData); 
         setResponse(resData);
         setMessage("Login successful!");
         navigation.navigate("Main");

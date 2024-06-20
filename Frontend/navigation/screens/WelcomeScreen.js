@@ -3,13 +3,11 @@ import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import { ImageBackground, StyleSheet } from "react-native";
-import { useLayoutEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../routing/routes";
 
 const image = require("../bee.jpg");
 
-export default function WelcomeScreen({ navigation, temperature, humidity }) {
+export default function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.container}>
       <View style={styles.contentContainer}>

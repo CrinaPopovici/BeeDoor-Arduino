@@ -1,18 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, View, Text } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  View,
+  Text,
+  Platform,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
-
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 import { getData } from "../routing/firebase";
 
 const image = require("../bee.jpg");
 
-export default function HomeScreen({ navigation }) {
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+export default function HomeScreen({
+  navigation,
+  setNotifications,
+  setUnreadCount,
+}) {
   const [indoorTemp, setIndoorTemp] = useState(null);
   const [indoorHumidity, setIndoorHumidity] = useState(null);
   const [outdoorTemp, setOutdoorTemp] = useState(null);
   const [outdoorHumidity, setOutdoorHumidity] = useState(null);
 
   useEffect(() => {
+    registerForPushNotificationsAsync();
+
     getData("/indoor/temperature", (data) => {
       console.log("Indoor Temperature: ", data);
       setIndoorTemp(data);
@@ -31,8 +52,33 @@ export default function HomeScreen({ navigation }) {
     });
   }, []);
 
-  // console.log(humidity);
-  // console.log(temperature);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (indoorHumidity > 50) {
+        const notificationMessage =
+          "Indoor Humidity is more than 70, ventilate the hive";
+        sendPushNotification(notificationMessage);
+        const now = new Date();
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          { message: notificationMessage, time: now.toLocaleString() },
+        ]);
+        setUnreadCount((prevCount) => prevCount + 1);
+      }
+
+      if (indoorHumidity < 30) {
+        const notificationMessage = "Indoor Humidity is lower than 30";
+        sendPushNotification(notificationMessage);
+        const now = new Date();
+        setNotifications((prevNotifications) => [
+          ...prevNotifications,
+          { message: notificationMessage, time: now.toLocaleString() },
+        ]);
+        setUnreadCount((prevCount) => prevCount + 1);
+      }
+    }, 20 * 1000);
+    return () => clearInterval(interval);
+  }, [indoorHumidity]);
 
   return (
     <ImageBackground source={image} style={styles.container}>
@@ -57,6 +103,50 @@ export default function HomeScreen({ navigation }) {
       <StatusBar style="auto" />
     </ImageBackground>
   );
+}
+
+async function sendPushNotification(message) {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Alert",
+      body: message,
+    },
+    trigger: { seconds: 1 },
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      alert("Failed to get push token for push notification!");
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+  } else {
+    console.log(
+      "Running on an emulator, push notifications are not supported."
+    );
+    return;
+  }
+
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  return token;
 }
 
 const styles = StyleSheet.create({

@@ -1,52 +1,85 @@
-import * as React from "react";
-import { View, Text } from "react-native";
-
+import React, { useState } from "react";
+import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { Badge } from "react-native-elements";
 
 import SettingsScreen from "./screens/SettingsScreen";
 import HomeScreen from "./screens/HomeScreen";
 import NotificationsScreen from "./screens/NotificationsScreen";
 
-export const welcomeName = "Welcome";
 export const homeTabName = "Home";
-const detailsName = "Details";
 const settingsName = "Settings";
 const notificationsName = "Notifications";
 
 const BottomTab = createBottomTabNavigator();
 
-export default function MainContainer({ temperature, humidity }) {
+export default function MainContainer() {
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  const NotificationIconWithBadge = ({ iconName, badgeCount, color, size }) => {
+    return (
+      <View style={{ width: 24, height: 24, margin: 5 }}>
+        <Ionicons name={iconName} size={size} color={color} />
+        {badgeCount > 0 && (
+          <Badge
+            value={badgeCount}
+            status="error"
+            containerStyle={{ position: "absolute", top: -4, right: -10 }}
+          />
+        )}
+      </View>
+    );
+  };
+
   return (
     <BottomTab.Navigator
-      initialRouteName={welcomeName}
+      initialRouteName={homeTabName}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          let rn = route.name;
-
-          if (rn === homeTabName) {
+          let badgeCount = 0;
+          if (route.name === homeTabName) {
             iconName = focused ? "home" : "home-outline";
-          } else if (rn === settingsName) {
+          } else if (route.name === settingsName) {
             iconName = focused ? "settings" : "settings-outline";
-          } else if (rn === notificationsName) {
+          } else if (route.name === notificationsName) {
             iconName = focused ? "notifications" : "notifications-outline";
+            // badgeCount = notifications.length;
+            badgeCount = unreadCount;
           }
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <NotificationIconWithBadge
+              iconName={iconName}
+              badgeCount={badgeCount}
+              color={color}
+              size={size}
+            />
+          );
         },
         tabBarActiveTintColor: "black",
       })}
     >
       <BottomTab.Screen name={homeTabName}>
-        {() => <HomeScreen temperature={temperature} humidity={humidity} />}
+        {() => (
+          <HomeScreen
+            setNotifications={setNotifications}
+            setUnreadCount={setUnreadCount}
+          />
+        )}
       </BottomTab.Screen>
 
       <BottomTab.Screen name={settingsName} component={SettingsScreen} />
 
-      <BottomTab.Screen
-        name={notificationsName}
-        component={NotificationsScreen}
-      />
+      <BottomTab.Screen name={notificationsName}>
+        {() => (
+          <NotificationsScreen
+            notifications={notifications}
+            clearUnreadCount={() => setUnreadCount(0)}
+          />
+        )}
+      </BottomTab.Screen>
     </BottomTab.Navigator>
   );
 }

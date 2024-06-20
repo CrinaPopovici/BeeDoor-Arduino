@@ -10,27 +10,42 @@ import { getData, sendCommand } from "../routing/firebase";
 
 const PowerScreen = () => {
   const [statusDoor, setStatusDoor] = useState(null);
+  const [outdoorTemp, setOutdoorTemp] = useState(null);
 
   useEffect(() => {
     getData("/doorStatus", (data) => {
       console.log("Status Door: ", data);
       setStatusDoor(data);
     });
+
+    getData("/outdoor/temperature", (data) => {
+      console.log("Outdoor Temperature: ", data);
+      setOutdoorTemp(data);
+    });
   }, []);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => sendCommand("open")}
-      >
-        <Text style={styles.text}>Open the Door</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.button2}
-        onPress={() => sendCommand("close")}
-      >
-        <Text style={styles.text}>Close the Door</Text>
-      </TouchableOpacity>
+      {outdoorTemp < 8 ? (
+        <Text style={styles.textTEMP}>
+          You can't open the door, the temperature is below 7
+        </Text>
+      ) : (
+        <>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => sendCommand("open")}
+          >
+            <Text style={styles.text}>Open the Door</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button2}
+            onPress={() => sendCommand("close")}
+          >
+            <Text style={styles.text}>Close the Door</Text>
+          </TouchableOpacity>
+        </>
+      )}
       <View style={styles.contentText}>
         <Text>
           Status Door: {statusDoor !== null ? statusDoor : "Loading..."}
@@ -48,19 +63,17 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
-    height: 60, // înălțime fixă
+    height: 60, 
     backgroundColor: "#010013",
     justifyContent: "center",
     alignItems: "center",
-    //borderRadius: 5,
   },
   button2: {
     width: "100%",
-    height: 60, // înălțime fixă
+    height: 60, 
     backgroundColor: "#e3e200",
     justifyContent: "center",
     alignItems: "center",
-    //borderRadius: 5,
   },
   contentText: {
     justifyContent: "center",
@@ -69,6 +82,10 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 18,
+  },
+  textTEMP: {
+    color: "red",
+    fontSize: 30,
   },
 });
 
