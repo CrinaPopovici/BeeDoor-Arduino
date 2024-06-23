@@ -5,7 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { ImageBackground, StyleSheet } from "react-native";
 import { Routes } from "../routing/routes";
 
-const image = require("../bee.jpg");
+const image = require("../screens/BottomNavWithHomeScreen/bee.jpg");
 
 export default function WelcomeScreen({ navigation }) {
   return (

@@ -5,11 +5,7 @@ export default function NotificationsScreen({
   notifications,
   clearUnreadCount,
 }) {
-  // console.log(notifications);
-  /*
-[{"message": "Indoor Humidity is more than 50, it's 66", "time": "17.06.2024, 00:06:03"}]
-  */
-
+  
   useEffect(() => {
     clearUnreadCount();
   }, []);

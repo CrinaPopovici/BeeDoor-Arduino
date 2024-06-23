@@ -16,7 +16,6 @@ import { Routes } from "../routing/routes";
 import NgrokId from "../Components/NgrokId";
 const LoginScreen = () => {
   const navigation = useNavigation();
-
   const [credentials, setCredentials] = useState({
     usernameOrEmail: "",
     password: "",
@@ -24,20 +23,16 @@ const LoginScreen = () => {
   const [response, setResponse] = useState(null);
   const [message, setMessage] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
-
   const handleChange = (name, value) => {
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
     }));
   };
-
   const handleSubmit = async () => {
     setMessage("");
     const url = `https://${NgrokId.id}.ngrok-free.app/api/auth/login`;
-
     console.log("Submitting credentials:", credentials);
-
     try {
       const res = await fetch(url, {
         method: "POST",
@@ -46,23 +41,19 @@ const LoginScreen = () => {
         },
         body: JSON.stringify(credentials),
       });
-
-      console.log("Response status:", res.status); 
-
-      const textResponse = await res.text(); 
+      console.log("Response status:", res.status);
+      const textResponse = await res.text();
       console.log("Response text:", textResponse);
-
       if (!res.ok) {
-        console.log("Response error:", textResponse); 
+        console.log("Response error:", textResponse);
         throw new Error(`Error: ${res.status} - ${textResponse}`);
       }
-
       try {
-        const resData = JSON.parse(textResponse); 
-        console.log("Response data:", resData); 
+        const resData = JSON.parse(textResponse);
+        console.log("Response data:", resData);
         setResponse(resData);
         setMessage("Login successful!");
-        navigation.navigate("Main");
+        navigation.navigate(Routes.MainContainer);
       } catch (jsonError) {
         console.error("Error parsing JSON response:", jsonError);
         throw new Error("Failed to parse JSON response");
@@ -118,9 +109,9 @@ const LoginScreen = () => {
           Register now!
         </Text>
       </View>
-      <Button mode="text" style={styles.button}>
+      {/* <Button mode="text" style={styles.button}>
         Forgot password?
-      </Button>
+      </Button> */}
     </SafeAreaView>
   );
 };

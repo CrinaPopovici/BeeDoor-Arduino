@@ -9,9 +9,9 @@ import {
 import { StatusBar } from "expo-status-bar";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
-import { getData } from "../routing/firebase";
+import { getData } from "../../routing/firebase";
 
-const image = require("../bee.jpg");
+const image = require("./bee.jpg");
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -21,11 +21,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function HomeScreen({
-  navigation,
-  setNotifications,
-  setUnreadCount,
-}) {
+export default function HomeScreen({ setNotifications, setUnreadCount }) {
   const [indoorTemp, setIndoorTemp] = useState(null);
   const [indoorHumidity, setIndoorHumidity] = useState(null);
   const [outdoorTemp, setOutdoorTemp] = useState(null);
@@ -80,6 +76,16 @@ export default function HomeScreen({
     return () => clearInterval(interval);
   }, [indoorHumidity]);
 
+  async function sendPushNotification(message) {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Alert",
+        body: message,
+      },
+      trigger: { seconds: 1 },
+    });
+  }
+  
   return (
     <ImageBackground source={image} style={styles.container}>
       <View style={styles.contentContainer}>
@@ -105,15 +111,7 @@ export default function HomeScreen({
   );
 }
 
-async function sendPushNotification(message) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "Alert",
-      body: message,
-    },
-    trigger: { seconds: 1 },
-  });
-}
+
 
 async function registerForPushNotificationsAsync() {
   let token;

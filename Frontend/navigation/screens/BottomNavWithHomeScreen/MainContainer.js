@@ -4,13 +4,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Badge } from "react-native-elements";
 
-import SettingsScreen from "./screens/SettingsScreen";
-import HomeScreen from "./screens/HomeScreen";
-import NotificationsScreen from "./screens/NotificationsScreen";
-
-export const homeTabName = "Home";
-const settingsName = "Settings";
-const notificationsName = "Notifications";
+import SettingsScreen from "../SettingsScreen";
+import HomeScreen from "./HomeScreen";
+import NotificationsScreen from "../NotificationsScreen";
+import { Routes } from "../../routing/routes";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -35,18 +32,17 @@ export default function MainContainer() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName={homeTabName}
+      initialRouteName={Routes.Home}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let badgeCount = 0;
-          if (route.name === homeTabName) {
+          if (route.name === Routes.Home) {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === settingsName) {
+          } else if (route.name === Routes.Settings) {
             iconName = focused ? "settings" : "settings-outline";
-          } else if (route.name === notificationsName) {
+          } else if (route.name === Routes.Notifications) {
             iconName = focused ? "notifications" : "notifications-outline";
-            // badgeCount = notifications.length;
             badgeCount = unreadCount;
           }
           return (
@@ -61,7 +57,7 @@ export default function MainContainer() {
         tabBarActiveTintColor: "black",
       })}
     >
-      <BottomTab.Screen name={homeTabName}>
+      <BottomTab.Screen name={Routes.Home}>
         {() => (
           <HomeScreen
             setNotifications={setNotifications}
@@ -70,9 +66,9 @@ export default function MainContainer() {
         )}
       </BottomTab.Screen>
 
-      <BottomTab.Screen name={settingsName} component={SettingsScreen} />
+      <BottomTab.Screen name={Routes.Settings} component={SettingsScreen} />
 
-      <BottomTab.Screen name={notificationsName}>
+      <BottomTab.Screen name={Routes.Notifications}>
         {() => (
           <NotificationsScreen
             notifications={notifications}
