@@ -11,11 +11,7 @@ namespace Backend.Controllers
 
     [ApiController]
     [Route("api/auth")]
-    public class AuthController(
-        UserManager<User> userManager,
-        RoleManager<Role> roleManager,
-        IConfiguration configuration)
-        : ControllerBase
+    public class AuthController(UserManager<User> userManager, RoleManager<Role> roleManager, IConfiguration configuration) : ControllerBase
     {
         [HttpPost]
         [Route("login")]

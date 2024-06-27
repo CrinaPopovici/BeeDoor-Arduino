@@ -49,6 +49,7 @@ const long interval1 = 1000;
 const long interval2 = 600000;    
 
 void loopEverySecond() {
+  
   byte temperature = 0;
   byte humidity = 0;
   int err = dht11.read(dht_pin, &temperature, &humidity, NULL);
@@ -89,6 +90,18 @@ void loopEverySecond() {
     Serial.println("Failed to get command from Firebase");
     Serial.println(firebaseData.errorReason());
   }
+   if(temperatureOutside >= 34)
+  {
+      Firebase.setString(firebaseData, "/commands/door", "open");
+      openDoor();
+      Serial.println("Outdoor temperature is above 20°C succes opened door");
+  }
+   if(temperatureOutside <=30)
+  {
+      Firebase.setString(firebaseData, "/commands/door", "close");
+      closeDoor();
+      Serial.println("Outdoor temperature is under 8° succes closed door");
+  }
 }
 
 
@@ -102,12 +115,13 @@ void loopEveryTenMinutes(){
       return;
     }
     
-  if(temperatureOutside < 8)
-  {
-      Firebase.setString(firebaseData, "/commands/door", "close");
-      closeDoor();
-      Serial.println("Outdoor temperature is under 8° succes closed door");
-  }
+  // if(temperatureOutside < 8)
+  // {
+  //     Firebase.setString(firebaseData, "/commands/door", "close");
+  //     closeDoor();
+  //     Serial.println("Outdoor temperature is under 8° succes closed door");
+  // }
+ 
 }
 
 void setup() {

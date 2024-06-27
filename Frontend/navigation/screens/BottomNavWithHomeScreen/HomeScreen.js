@@ -85,7 +85,7 @@ export default function HomeScreen({ setNotifications, setUnreadCount }) {
       trigger: { seconds: 1 },
     });
   }
-  
+
   return (
     <ImageBackground source={image} style={styles.container}>
       <View style={styles.contentContainer}>
@@ -97,6 +97,7 @@ export default function HomeScreen({ setNotifications, setUnreadCount }) {
           Indoor Humidity:{" "}
           {indoorHumidity !== null ? indoorHumidity : "Loading..."} %
         </Text>
+        <Text> </Text>
         <Text>
           Outdoor Temperature:{" "}
           {outdoorTemp !== null ? outdoorTemp : "Loading..."} °C
@@ -110,8 +111,6 @@ export default function HomeScreen({ setNotifications, setUnreadCount }) {
     </ImageBackground>
   );
 }
-
-
 
 async function registerForPushNotificationsAsync() {
   let token;

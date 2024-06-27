@@ -43,10 +43,16 @@ const LoginScreen = () => {
       });
       console.log("Response status:", res.status);
       const textResponse = await res.text();
-      console.log("Response text:", textResponse);
       if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error("Username/email or password is incorrect");
+        }
         console.log("Response error:", textResponse);
-        throw new Error(`Error: ${res.status} - ${textResponse}`);
+        const errorResponse = JSON.parse(textResponse);
+        const errorMessages = Object.values(errorResponse.errors)
+          .flat()
+          .join("\n");
+        throw new Error(errorMessages);
       }
       try {
         const resData = JSON.parse(textResponse);
@@ -55,14 +61,13 @@ const LoginScreen = () => {
         setMessage("Login successful!");
         navigation.navigate(Routes.MainContainer);
       } catch (jsonError) {
-        console.error("Error parsing JSON response:", jsonError);
         throw new Error("Failed to parse JSON response");
       }
     } catch (error) {
-      console.error("Error making POST request:", error);
-      setMessage(`Login failed. Please try again. ${error.message}`);
-      Alert.alert("Error", `Login failed. Please try again. ${error.message}`);
+      setMessage("Login failed. Please try again. ");
+      Alert.alert("Login failed", error.message);
     }
+    setCredentials("");
   };
 
   return (
@@ -102,16 +107,16 @@ const LoginScreen = () => {
           Login
         </Button>
         <Text style={styles.registerText}>Don't have an account? {"\n"}</Text>
-        <Text
+        <Button
+          mode="text"
           style={styles.registerText}
-          onPress={() => navigation.navigate(Routes.SignUp)}
+          onPress={() => {
+            navigation.navigate(Routes.SignUp);
+          }}
         >
           Register now!
-        </Text>
+        </Button>
       </View>
-      {/* <Button mode="text" style={styles.button}>
-        Forgot password?
-      </Button> */}
     </SafeAreaView>
   );
 };

@@ -12,8 +12,11 @@ namespace Backend.Business.Auth
         [EmailAddress]
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        public long PhoneNumber { get; set; }
+
+        [RegularExpression(@"^0\d{9}$", ErrorMessage = "Phone number must start with 0 and be 10 digits long")]
+        public string PhoneNumber { get; set; }
         [Required(ErrorMessage = "Password is required")]
+        [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be at least 8 characters long")]
         public string Password { get; set; }
     }
 }

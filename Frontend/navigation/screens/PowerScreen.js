@@ -26,9 +26,13 @@ const PowerScreen = () => {
 
   return (
     <View style={styles.container}>
-      {outdoorTemp < 8 ? (
+      {outdoorTemp >= 34 ? (
         <Text style={styles.textTEMP}>
-          You can't open the door, the temperature is below 7
+          You can't close the door, the temperature is above 20 degrees
+        </Text>
+      ) : outdoorTemp <= 30 ? (
+        <Text style={styles.textTEMP}>
+          You can't open the door, the temperature is under 8 degrees
         </Text>
       ) : (
         <>
@@ -50,6 +54,9 @@ const PowerScreen = () => {
         <Text>
           Status Door: {statusDoor !== null ? statusDoor : "Loading..."}
         </Text>
+        <Text>
+          Outside temperature: {outdoorTemp !== null ? outdoorTemp : "Loading..."} °C
+        </Text>
       </View>
     </View>
   );
@@ -59,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     paddingTop: 5,
     paddingBottom: 5,
-    marginBottom: Dimensions.get("window").height * 0.4, // 40% din inaltimea ecranului
+    marginBottom: Dimensions.get("window").height * 0.4, 
   },
   button: {
     width: "100%",

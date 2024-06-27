@@ -1,24 +1,32 @@
-import React, { useEffect } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function NotificationsScreen({
   notifications,
-  clearUnreadCount,
+  setUnreadCount,
 }) {
-  
-  useEffect(() => {
-    clearUnreadCount();
-  }, []);
+  const decrementUnreadCount = () => {
+    setUnreadCount(prevCount => Math.max(prevCount - 1, 0)); 
+  }
   return (
     <View style={styles.container}>
       <FlatList
         data={notifications}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={styles.notificationContainer}>
-            <Text style={styles.notificationText}>{item.message}</Text>
-            <Text style={styles.notificationTime}>{item.time}</Text>
-          </View>
+          <TouchableOpacity onPress={decrementUnreadCount}>
+            <View style={styles.notificationContainer}>
+              <Text style={styles.notificationText}>{item.message}</Text>
+              <Text style={styles.notificationTime}>{item.time}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </View>

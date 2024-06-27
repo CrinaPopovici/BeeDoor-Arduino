@@ -14,7 +14,8 @@ const BottomTab = createBottomTabNavigator();
 export default function MainContainer() {
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-
+  
+  
   const NotificationIconWithBadge = ({ iconName, badgeCount, color, size }) => {
     return (
       <View style={{ width: 24, height: 24, margin: 5 }}>
@@ -72,10 +73,11 @@ export default function MainContainer() {
         {() => (
           <NotificationsScreen
             notifications={notifications}
-            clearUnreadCount={() => setUnreadCount(0)}
+            setUnreadCount={setUnreadCount}
           />
         )}
       </BottomTab.Screen>
     </BottomTab.Navigator>
   );
 }
+

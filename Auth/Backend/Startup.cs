@@ -12,7 +12,6 @@ namespace Backend
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
         private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
@@ -27,26 +26,22 @@ namespace Backend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
             });
-            services.AddDbContext<AppDbContext>(
-         options => options.UseNpgsql(
-             _configuration.GetConnectionString("Live")
-         ));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(_configuration.GetConnectionString("Live")));
+
             services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            })
-    .AddEntityFrameworkStores<AppDbContext>()
-    .AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
+            }).AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
                     options.RequireHttpsMetadata = false;
@@ -71,7 +66,6 @@ namespace Backend
      
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
